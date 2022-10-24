@@ -30,6 +30,7 @@ export class MyTableComponent implements OnInit, OnChanges {
   maxPage = 0;
   itemPerPage = 0;
   dataModify: boolean = false;
+  typeOfData?: { key: string; type: string }[];
 
   constructor() {}
 
@@ -41,6 +42,14 @@ export class MyTableComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.itemPerPage = this.tableConfig.paginationTable.itemPerPage;
     this.setMaxPage();
+    this.data.forEach((item) =>
+      this.tableConfig.headers.forEach((header) =>
+        this.typeOfData?.push({
+          key: item[header.key],
+          type: typeof item[header.key],
+        })
+      )
+    );
   }
 
   cambioValore(event: any, isSelect: boolean) {

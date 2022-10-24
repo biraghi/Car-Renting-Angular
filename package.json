@@ -24,6 +24,7 @@
     "@ng-bootstrap/ng-bootstrap": "^13.1.0",
     "@popperjs/core": "^2.11.6",
     "@types/lodash": "^4.14.186",
+    "angular-in-memory-web-api": "^0.14.0",
     "bootstrap": "^5.2.2",
     "lodash": "^4.17.21",
     "rxjs": "~7.5.0",

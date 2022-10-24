@@ -8,7 +8,6 @@ import { MyNavabarConfig } from './models/MyNavabarConfig';
 })
 export class NavbarComponent implements OnInit {
   @Input() myNavbarConfig!: MyNavabarConfig;
-  collapsed = true;
 
   constructor() {}
 

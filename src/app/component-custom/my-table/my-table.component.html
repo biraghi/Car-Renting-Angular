@@ -1,76 +1,115 @@
 <div class="container-fluid">
   <div class="row pt-3 col-7">
-
-
-
     <div class="row input-group col-3">
       <label for="search-box">Table Search</label>
 
-        <div class="input-group">
-
-          <div class="col-sm-3">
-            <select class="form-select form-select" (change)="cambioValore($event, true)">
-              <option selected value="">Select header</option>
-              <option *ngFor="let header of tableConfig.headers" value="{{header.key}}">{{header.label}}</option>
-            </select>
-          </div>
-
-          <div class="col-sm-7">
-            <input (keyup)="cambioValore($event, false)" type="text" class="form-control"/>
-          </div>
-
-          <div class="col-sm-2">
-            <select class="form-select form-select" (change)="changeItemPerPage($event)">
-              <option selected value={{tableConfig.paginationTable.itemPerPage}}>{{tableConfig.paginationTable.itemPerPage}}</option>
-              <option *ngFor="let PageItem of tableConfig.paginationTable.itemPerPageOption" value="{{PageItem}}">{{PageItem}}</option>
-            </select>
-          </div>
-
+      <div class="input-group">
+        <div class="col-sm-3">
+          <select
+            class="form-select form-select"
+            (change)="cambioValore($event, true)"
+          >
+            <option selected value="">Select header</option>
+            <option
+              *ngFor="let header of tableConfig.headers"
+              value="{{ header.key }}"
+            >
+              {{ header.label }}
+            </option>
+          </select>
         </div>
 
+        <div class="col-sm-7">
+          <input
+            (keyup)="cambioValore($event, false)"
+            type="text"
+            class="form-control"
+          />
+        </div>
+
+        <div class="col-sm-2">
+          <select
+            class="form-select form-select"
+            (change)="changeItemPerPage($event)"
+          >
+            <option
+              selected
+              value="{{ tableConfig.paginationTable.itemPerPage }}"
+            >
+              {{ tableConfig.paginationTable.itemPerPage }}
+            </option>
+            <option
+              *ngFor="
+                let PageItem of tableConfig.paginationTable.itemPerPageOption
+              "
+              value="{{ PageItem }}"
+            >
+              {{ PageItem }}
+            </option>
+          </select>
+        </div>
+      </div>
     </div>
 
-
     <div class="row pt-3 table-responsive">
-      <table class="table table-striped table-bordered ">
+      <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th *ngFor="let header of tableConfig.headers"
+            <th
+              *ngFor="let header of tableConfig.headers"
               (click)="changeOrder(header.key)"
-              id="headerTable" scope="col" class="col-2">
-              {{header.label}} <i *ngIf="header.key==tableConfig.order.defaultColumn && icon" class="fa fa-sort-{{icon}}"></i>
+              id="headerTable"
+              scope="col"
+              class="col-2"
+            >
+              {{ header.label }}
+              <i
+                *ngIf="header.key == tableConfig.order.defaultColumn && icon"
+                class="fa fa-sort-{{ icon }}"
+              ></i>
             </th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor=" let dataRow of data | searchFilter: searchHeader: searchText | pagination: currentPage: itemPerPage">
+          <tr
+            *ngFor="
+              let dataRow of data
+                | pagination: currentPage:itemPerPage
+                | searchFilter: searchHeader:searchText
+            "
+          >
             <td *ngFor="let header of tableConfig.headers">
-              {{dataRow[header.key]}}</td>
+              {{ dataRow[header.key] }}
+            </td>
             <td>
               <div class="btn-group">
-                <button *ngFor="let action of tableConfig.actions" class="btn btn-primary" (click)="actionButton(dataRow, action)">{{action}}</button>
+                <button
+                  *ngFor="let action of tableConfig.actions"
+                  class="btn btn-primary"
+                  (click)="actionButton(dataRow, action)"
+                >
+                  {{ action }}
+                </button>
               </div>
-
             </td>
           </tr>
         </tbody>
       </table>
       <div class="btn-group">
-        <button class="btn btn-primary" (click)="pageNavigation(false)"><i class="fa fa-chevron-left"></i></button>
+        <button class="btn btn-primary" (click)="pageNavigation(false)">
+          <i class="fa fa-chevron-left"></i>
+        </button>
 
         <div class="card border-primary">
           <div class="card-body col-1 text-center row">
-            <a class="">{{currentPage + 1}}</a>
+            <a class="">{{ currentPage + 1 }}</a>
           </div>
-
         </div>
-        <button class="btn btn-primary" (click)="pageNavigation(true)"><i class="fa fa-chevron-right"></i></button>
+        <button class="btn btn-primary" (click)="pageNavigation(true)">
+          <i class="fa fa-chevron-right"></i>
+        </button>
       </div>
     </div>
-
-
-
-
   </div>
 </div>
