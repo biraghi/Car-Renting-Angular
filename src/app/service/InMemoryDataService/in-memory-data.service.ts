@@ -34,7 +34,34 @@ export class InMemoryDataService {
         admin: false,
       },
     ];
-    return { users };
+
+    const cars = [
+      {
+        id: 1,
+        license_plate: 'ca6dh8h',
+        manufacturer: 'Tesla',
+        model: 's',
+        type_name: 'berlina',
+        year_registration: '2020',
+      },
+      {
+        id: 2,
+        license_plate: 'gc7agwe',
+        manufacturer: 'Bmw',
+        model: 'x5',
+        type_name: 'suv',
+        year_registration: '2018',
+      },
+      {
+        id: 7,
+        license_plate: 'cda6h3f',
+        manufacturer: 'Audi',
+        model: 'r8',
+        type_name: 'sportiva',
+        year_registration: '2019',
+      },
+    ];
+    return { users, cars };
   }
 
   constructor() {}

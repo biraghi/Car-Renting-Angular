@@ -11,7 +11,7 @@ import { UserService } from 'src/app/service/UserService/user.service';
   styleUrls: ['./users.component.css'],
 })
 export class UsersComponent implements OnInit {
-  datepipe: DatePipe = new DatePipe('en-US');
+  datepipe: DatePipe = new DatePipe('it" , "IT');
   header: MyTableConfig = {
     headers: [
       { key: 'id', label: 'ID' },
@@ -22,7 +22,7 @@ export class UsersComponent implements OnInit {
       { key: 'admin', label: 'Admin' },
     ],
     order: { orderType: '', defaultColumn: '' },
-    paginationTable: { itemPerPage: 2, itemPerPageOption: [5, 10, 15] },
+    paginationTable: { itemPerPage: 3, itemPerPageOption: [5, 10, 15] },
     actions: [
       MyTableActionEnum.NEW_ROW,
       MyTableActionEnum.EDIT,

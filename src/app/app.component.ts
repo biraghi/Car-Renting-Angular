@@ -19,9 +19,9 @@ export class AppComponent {
       {
         item: new ItemNavbar('database', 'Database', '#'),
         dropdown: [
-          new ItemNavbar('users', 'Users', '/users'),
-          new ItemNavbar('cars', 'Cars', '/cars'),
-          new ItemNavbar('bookings', 'Bookings', '/bookings'),
+          new ItemNavbar('users', 'Users', '/data/users'),
+          new ItemNavbar('cars', 'Cars', '/data/cars'),
+          new ItemNavbar('bookings', 'Bookings', '/data/bookings'),
         ],
         type: 'dropdown',
       },
