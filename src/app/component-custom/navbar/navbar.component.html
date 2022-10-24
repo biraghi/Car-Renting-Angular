@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{{ myNavbarConfig.brand.path }}">{{
+      myNavbarConfig.brand.label
+    }}</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse"
+      id="navbarSupportedContent"
+      [class.collapse]="collapsed"
+    >
+      <ul class="navbar-nav" *ngFor="let data of myNavbarConfig.data">
+        <ng-container *ngIf="data.type != 'dropdown'">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="{{ data.item.path }}"
+              >{{ data.item.label }}</a
+            >
+          </li>
+        </ng-container>
+
+        <ng-container *ngIf="data.type == 'dropdown'">
+          <li class="nav-item" ngbDropdown>
+            <a class="nav-link" ngbDropdownToggle role="button">
+              {{ data.item.label }}
+            </a>
+            <ul ngbDropdownMenu class="dropdown-menu">
+              <li *ngFor="let item of data.dropdown">
+                <a ngbDropdownItem href="{{ item.path }}">
+                  {{ item.label }}
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</nav>
