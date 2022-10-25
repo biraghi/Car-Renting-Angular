@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { UserModel } from 'src/app/models/UserModel';
+import { MessageService } from '../message.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,10 @@ import { UserModel } from 'src/app/models/UserModel';
 export class UserService {
   private usersUrl = 'api/users';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private messageService: MessageService
+  ) {}
 
   getUsers(): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(this.usersUrl);
@@ -17,5 +21,30 @@ export class UserService {
 
   deleteUser(id: number) {
     this.http.delete<UserModel>(this.usersUrl + '/' + id);
+  }
+
+  addUser(newUser: UserModel) {
+    return this.http.post<UserModel>(this.usersUrl, newUser, this.httpOptions);
+  }
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  };
+
+  private log(message: string) {
+    this.messageService.add(`UserService: ${message}`);
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      this.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
   }
 }

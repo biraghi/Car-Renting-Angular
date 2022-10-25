@@ -49,6 +49,17 @@
           </select>
         </div>
       </div>
+      <div class="pt-3">
+        <ng-container *ngFor="let action of tableConfig.actions">
+          <button
+            *ngIf="isAdd(action)"
+            class="btn btn-primary"
+            (click)="actionButton({}, action)"
+          >
+            {{ action }}
+          </button>
+        </ng-container>
+      </div>
     </div>
 
     <div class="row pt-3 table-responsive">
@@ -84,13 +95,15 @@
             </td>
             <td>
               <div class="btn-group">
-                <button
-                  *ngFor="let action of tableConfig.actions"
-                  class="btn btn-primary"
-                  (click)="actionButton(dataRow, action)"
-                >
-                  {{ action }}
-                </button>
+                <ng-container *ngFor="let action of tableConfig.actions">
+                  <button
+                    *ngIf="isAdd(action) == false"
+                    class="btn btn-primary"
+                    (click)="actionButton(dataRow, action)"
+                  >
+                    {{ action }}
+                  </button>
+                </ng-container>
               </div>
             </td>
           </tr>

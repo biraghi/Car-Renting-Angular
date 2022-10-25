@@ -11,6 +11,7 @@ import {
 import { MyTableConfig } from './model/MyTableConfig';
 import { orderBy } from 'lodash';
 import { ActionButton } from './model/ActionButton';
+import { MyTableActionEnum } from './model/MyTableActionEnum';
 
 @Component({
   selector: 'app-my-table',
@@ -30,16 +31,21 @@ export class MyTableComponent implements OnInit, OnChanges {
   maxPage = 0;
   itemPerPage = 0;
   dataModify: boolean = false;
+  MyTableActionEnum = MyTableActionEnum;
 
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges) {
     this.itemPerPage = this.tableConfig.paginationTable.itemPerPage;
     this.setMaxPage();
-    console.log(changes);
   }
 
   ngOnInit(): void {}
+
+  isAdd(action: string): boolean {
+    if (action == MyTableActionEnum.NEW_ROW) return true;
+    else return false;
+  }
 
   cambioValore(event: any, isSelect: boolean) {
     if (isSelect) {

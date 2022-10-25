@@ -21,6 +21,7 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { HttpClientModule } from '@angular/common/http';
 import { InMemoryDataService } from './service/InMemoryDataService/in-memory-data.service';
 import { SetDateFormatPipe } from './component-custom/my-table/pipe/set-date-format.pipe';
+import { MyFormComponent } from './component-custom/my-form/my-form.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { SetDateFormatPipe } from './component-custom/my-table/pipe/set-date-for
     BookingsComponent,
     DataComponent,
     SetDateFormatPipe,
+    MyFormComponent,
   ],
   imports: [
     BrowserModule,

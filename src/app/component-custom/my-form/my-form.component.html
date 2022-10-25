@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="row pt-4 justify-content-center col-4">
+    <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+      <h1>Form</h1>
+      <div
+        class="input-group mb-4 pt-1"
+        *ngFor="let header of tableConfig.headers"
+      >
+        <div class="form-floating" *ngIf="header.key != 'id'">
+          <input
+            type="text"
+            class="form-control"
+            id="header.key"
+            required
+            [(ngModel)]="data[header.key]"
+            name="{{ header.key }}"
+            #input="ngModel"
+          />
+          <label for="{{ header.key }}">{{ header.label }}</label>
+          <div
+            [hidden]="input.valid || input.pristine"
+            class="alert alert-danger"
+          >
+            Please insert {{ header.label }}
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-evenly">
+        <div class="col-3">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!userForm.form.valid"
+          >
+            New Data
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

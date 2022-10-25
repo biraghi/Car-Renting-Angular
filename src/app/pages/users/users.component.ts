@@ -32,6 +32,10 @@ export class UsersComponent implements OnInit {
   };
 
   data: UserModel[] = [];
+  copyData: UserModel[] = [];
+
+  dataForm?: UserModel;
+  formVisible: boolean = false;
 
   constructor(private userService: UserService) {}
 
@@ -58,6 +62,11 @@ export class UsersComponent implements OnInit {
     switch (actionTable.action) {
       case MyTableActionEnum.DELETE: {
         this.deleteUser(actionTable.item);
+        break;
+      }
+      case MyTableActionEnum.NEW_ROW: {
+        this.dataForm = actionTable.item;
+        this.formVisible = true;
       }
     }
   }
@@ -65,5 +74,21 @@ export class UsersComponent implements OnInit {
   deleteUser(user: UserModel) {
     this.data = this.data.filter((item) => item.id != user.id);
     this.userService.deleteUser(user.id);
+  }
+
+  formData(newUser: UserModel) {
+    if (newUser.id == null) {
+      this.addUser(newUser);
+      this.formVisible = false;
+    }
+  }
+
+  addUser(newUser: UserModel) {
+    this.copyData = this.data;
+    newUser.id = Math.max(...this.data.map((o) => o.id)) + 1;
+    this.userService.addUser(newUser).subscribe((user) => {
+      this.copyData.push(user);
+      this.data = this.copyData;
+    });
   }
 }
