@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { httpClientInMemBackendServiceFactory } from 'angular-in-memory-web-api';
+import { ActionButton } from 'src/app/component-custom/my-table/model/ActionButton';
 import { MyTableActionEnum } from 'src/app/component-custom/my-table/model/MyTableActionEnum';
 import { MyTableConfig } from 'src/app/component-custom/my-table/model/MyTableConfig';
 import { CarModel } from 'src/app/models/CarModel';
@@ -30,6 +31,11 @@ export class CarsComponent implements OnInit {
   };
 
   data: CarModel[] = [];
+  copyData: CarModel[] = [];
+
+  dataForm?: CarModel;
+
+  formVisible: boolean = false;
 
   constructor(private carService: CarService) {}
 
@@ -39,5 +45,26 @@ export class CarsComponent implements OnInit {
 
   getCars() {
     return this.carService.getCars().subscribe((cars) => (this.data = cars));
+  }
+
+  detectAction(actionTable: ActionButton) {
+    switch (actionTable.action) {
+      case MyTableActionEnum.DELETE: {
+        this.deleteCar(actionTable.item);
+        break;
+      }
+      case (MyTableActionEnum.NEW_ROW, MyTableActionEnum.EDIT): {
+        break;
+      }
+    }
+  }
+
+  deleteCar(car: CarModel) {
+    this.carService
+      .deleteCar(car.id)
+      .subscribe(
+        (carDeleted) =>
+          (this.data = this.data.filter((item) => item.id != car.id))
+      );
   }
 }

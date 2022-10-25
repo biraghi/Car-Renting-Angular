@@ -73,8 +73,12 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(user: UserModel) {
-    this.data = this.data.filter((item) => item.id != user.id);
-    this.userService.deleteUser(user.id);
+    this.userService
+      .deleteUser(user.id)
+      .subscribe(
+        (userDeleted) =>
+          (this.data = this.data.filter((item) => item.id != user.id))
+      );
   }
 
   formData(newUser: UserModel) {

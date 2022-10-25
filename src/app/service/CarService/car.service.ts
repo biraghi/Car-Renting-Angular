@@ -14,4 +14,8 @@ export class CarService {
   getCars(): Observable<CarModel[]> {
     return this.http.get<CarModel[]>(this.carsUrl);
   }
+
+  deleteCar(id: number) {
+    return this.http.delete<CarModel>(this.carsUrl + '/' + id);
+  }
 }

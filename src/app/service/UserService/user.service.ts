@@ -20,7 +20,7 @@ export class UserService {
   }
 
   deleteUser(id: number) {
-    this.http.delete<UserModel>(this.usersUrl + '/' + id);
+    return this.http.delete<UserModel>(this.usersUrl + '/' + id);
   }
 
   addUser(newUser: UserModel) {
