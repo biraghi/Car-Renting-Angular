@@ -1,7 +1,8 @@
 <div class="container-fluid">
   <div class="row pt-4 justify-content-center col-4">
     <form (ngSubmit)="onSubmit()" #userForm="ngForm">
-      <h1>Form</h1>
+      <h1 *ngIf="data.id">Update</h1>
+      <h1 *ngIf="!data.id">Add</h1>
       <div
         class="input-group mb-4 pt-1"
         *ngFor="let header of tableConfig.headers"
@@ -32,8 +33,18 @@
             type="submit"
             class="btn btn-primary"
             [disabled]="!userForm.form.valid"
+            *ngIf="data.id"
           >
-            New Data
+            Update
+          </button>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!userForm.form.valid"
+            *ngIf="!data.id"
+          >
+            Add
           </button>
         </div>
       </div>

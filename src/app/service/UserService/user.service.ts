@@ -27,6 +27,10 @@ export class UserService {
     return this.http.post<UserModel>(this.usersUrl, newUser, this.httpOptions);
   }
 
+  updateUser(newUser: UserModel) {
+    return this.http.put<UserModel>(this.usersUrl, newUser, this.httpOptions);
+  }
+
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };

@@ -64,9 +64,10 @@ export class UsersComponent implements OnInit {
         this.deleteUser(actionTable.item);
         break;
       }
-      case MyTableActionEnum.NEW_ROW: {
+      case (MyTableActionEnum.NEW_ROW, MyTableActionEnum.EDIT): {
         this.dataForm = actionTable.item;
         this.formVisible = true;
+        break;
       }
     }
   }
@@ -80,6 +81,9 @@ export class UsersComponent implements OnInit {
     if (newUser.id == null) {
       this.addUser(newUser);
       this.formVisible = false;
+    } else {
+      this.updateData(newUser);
+      this.formVisible = false;
     }
   }
 
@@ -88,6 +92,18 @@ export class UsersComponent implements OnInit {
     newUser.id = Math.max(...this.data.map((o) => o.id)) + 1;
     this.userService.addUser(newUser).subscribe((user) => {
       this.copyData.push(user);
+      this.data = this.copyData;
+    });
+  }
+
+  updateData(newUser: UserModel) {
+    this.copyData = this.data;
+    this.userService.updateUser(newUser).subscribe((user) => {
+      this.copyData.forEach((item) => {
+        if (item.id == user.id) {
+          item = user;
+        }
+      });
       this.data = this.copyData;
     });
   }
