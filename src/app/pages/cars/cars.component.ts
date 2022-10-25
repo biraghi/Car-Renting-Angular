@@ -38,6 +38,6 @@ export class CarsComponent implements OnInit {
   }
 
   getCars() {
-    return this.carService.getUsers().subscribe((cars) => (this.data = cars));
+    return this.carService.getCars().subscribe((cars) => (this.data = cars));
   }
 }

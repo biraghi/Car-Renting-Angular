@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { ActionButton } from 'src/app/component-custom/my-table/model/ActionButton';
 import { MyTableActionEnum } from 'src/app/component-custom/my-table/model/MyTableActionEnum';
 import { MyTableConfig } from 'src/app/component-custom/my-table/model/MyTableConfig';
 import { UserModel } from 'src/app/models/UserModel';
@@ -36,15 +37,33 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUsers();
+    this.data = this.setDate(this.data);
   }
 
   getUsers(): void {
     this.userService.getUsers().subscribe((user) => (this.data = user));
-    this.data.forEach((user) => {
+  }
+
+  setDate(data: UserModel[]) {
+    data.forEach((user) => {
       let dateString = this.datepipe.transform(user.birth_date, 'dd-MM-YYYY');
       if (dateString) {
         user.birth_date = dateString;
       }
     });
+    return data;
+  }
+
+  detectAction(actionTable: ActionButton) {
+    switch (actionTable.action) {
+      case MyTableActionEnum.DELETE: {
+        this.deleteUser(actionTable.item);
+      }
+    }
+  }
+
+  deleteUser(user: UserModel) {
+    this.data = this.data.filter((item) => item.id != user.id);
+    this.userService.deleteUser(user.id);
   }
 }

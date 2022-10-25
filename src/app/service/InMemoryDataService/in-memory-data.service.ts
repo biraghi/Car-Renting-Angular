@@ -61,7 +61,79 @@ export class InMemoryDataService {
         year_registration: '2019',
       },
     ];
-    return { users, cars };
+
+    const bookings = [
+      {
+        id: 16,
+        finish_date: '2022-09-09',
+        start_date: '2022-09-05',
+        user: {
+          id: 1,
+          username: 'lor.bir',
+          password: '',
+          firstname: 'Lorenzo',
+          lastname: 'Biraghi',
+          birth_date: new Date('2002-03-13').toLocaleString(),
+          admin: true,
+        },
+        car: {
+          id: 1,
+          license_plate: 'ca6dh8h',
+          manufacturer: 'Tesla',
+          model: 's',
+          type_name: 'berlina',
+          year_registration: '2020',
+        },
+        approve: true,
+      },
+      {
+        id: 16,
+        finish_date: '2022-09-09',
+        start_date: '2022-09-05',
+        user: {
+          id: 1,
+          username: 'lor.bir',
+          password: '',
+          firstname: 'Lorenzo',
+          lastname: 'Biraghi',
+          birth_date: new Date('2002-03-13').toLocaleString(),
+          admin: true,
+        },
+        car: {
+          id: 1,
+          license_plate: 'ca6dh8h',
+          manufacturer: 'Tesla',
+          model: 's',
+          type_name: 'berlina',
+          year_registration: '2020',
+        },
+        approve: true,
+      },
+      {
+        id: 16,
+        finish_date: '2022-09-09',
+        start_date: '2022-09-05',
+        user: {
+          id: 1,
+          username: 'lor.bir',
+          password: '',
+          firstname: 'Lorenzo',
+          lastname: 'Biraghi',
+          birth_date: new Date('2002-03-13').toLocaleString(),
+          admin: true,
+        },
+        car: {
+          id: 1,
+          license_plate: 'ca6dh8h',
+          manufacturer: 'Tesla',
+          model: 's',
+          type_name: 'berlina',
+          year_registration: '2020',
+        },
+        approve: true,
+      },
+    ];
+    return { users, cars, bookings };
   }
 
   constructor() {}

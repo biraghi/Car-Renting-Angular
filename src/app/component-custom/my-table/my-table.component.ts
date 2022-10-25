@@ -30,27 +30,16 @@ export class MyTableComponent implements OnInit, OnChanges {
   maxPage = 0;
   itemPerPage = 0;
   dataModify: boolean = false;
-  typeOfData?: { key: string; type: string }[];
 
   constructor() {}
 
   ngOnChanges(changes: SimpleChanges) {
+    this.itemPerPage = this.tableConfig.paginationTable.itemPerPage;
     this.setMaxPage();
     console.log(changes);
   }
 
-  ngOnInit(): void {
-    this.itemPerPage = this.tableConfig.paginationTable.itemPerPage;
-    this.setMaxPage();
-    this.data.forEach((item) =>
-      this.tableConfig.headers.forEach((header) =>
-        this.typeOfData?.push({
-          key: item[header.key],
-          type: typeof item[header.key],
-        })
-      )
-    );
-  }
+  ngOnInit(): void {}
 
   cambioValore(event: any, isSelect: boolean) {
     if (isSelect) {
@@ -106,27 +95,4 @@ export class MyTableComponent implements OnInit, OnChanges {
   actionButton(item: any, action: string) {
     this.actionChange.emit({ action, item });
   }
-
-  //Vari tipi di Search
-  // @Output() dataEventMitter = new EventEmitter<any[]>();
-  // searchSimple(term:string){
-  //   if(term || term != ""){
-  //     term = term.toLocaleLowerCase();
-  //     this.data = this.dataOriginal.filter(obj=> obj['firstname'].toLocaleLowerCase().includes(term))
-  //   }
-  //   else{
-  //     this.data = this.dataOriginal;
-  //   }
-  // }
-
-  // searchEventMitter(term:string){
-  //   if(term || term != ""){
-  //     term = term.toLocaleLowerCase();
-  //     this.data = this.dataOriginal.filter(obj=> obj['firstname'].toLocaleLowerCase().includes(term))
-  //     this.dataEventMitter.emit(this.data);
-  //   }
-  //   else{
-  //     this.data = this.dataOriginal;
-  //   }
-  // }
 }
