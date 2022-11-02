@@ -1,10 +1,20 @@
 <div class="container-fluid">
   <div class="row pt-3">
-    <h1>Car's List</h1>
-    <app-my-table
-      [tableConfig]="header"
-      [data]="data"
-      (actionChange)="detectAction($event)"
-    ></app-my-table>
+    <ng-container *ngIf="!formVisible">
+      <h1>Car's List</h1>
+      <app-my-table
+        [tableConfig]="header"
+        [data]="data"
+        (actionChange)="detectAction($event)"
+      ></app-my-table>
+    </ng-container>
+
+    <ng-container *ngIf="formVisible">
+      <app-my-form
+        [tableConfig]="header"
+        [data]="dataForm"
+        (actionChange)="formData($event)"
+      ></app-my-form>
+    </ng-container>
   </div>
 </div>

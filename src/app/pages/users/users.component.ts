@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, IterableDiffers, OnInit } from '@angular/core';
+import { cloneDeep } from 'lodash';
 import { ActionButton } from 'src/app/component-custom/my-table/model/ActionButton';
 import { MyTableActionEnum } from 'src/app/component-custom/my-table/model/MyTableActionEnum';
 import { MyTableConfig } from 'src/app/component-custom/my-table/model/MyTableConfig';
@@ -37,6 +38,8 @@ export class UsersComponent implements OnInit {
   dataForm?: UserModel;
   formVisible: boolean = false;
 
+  iterableDiffer: any;
+
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
@@ -64,7 +67,8 @@ export class UsersComponent implements OnInit {
         this.deleteUser(actionTable.item);
         break;
       }
-      case (MyTableActionEnum.NEW_ROW, MyTableActionEnum.EDIT): {
+      case MyTableActionEnum.NEW_ROW:
+      case MyTableActionEnum.EDIT: {
         this.dataForm = actionTable.item;
         this.formVisible = true;
         break;
@@ -92,11 +96,10 @@ export class UsersComponent implements OnInit {
   }
 
   addUser(newUser: UserModel) {
-    this.copyData = this.data;
     newUser.id = Math.max(...this.data.map((o) => o.id)) + 1;
     this.userService.addUser(newUser).subscribe((user) => {
-      this.copyData.push(user);
-      this.data = this.copyData;
+      this.data.push(cloneDeep(user));
+      console.log(this.data);
     });
   }
 

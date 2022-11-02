@@ -7,9 +7,10 @@ import {
   Output,
   EventEmitter,
   ChangeDetectionStrategy,
+  IterableDiffers,
 } from '@angular/core';
 import { MyTableConfig } from './model/MyTableConfig';
-import { orderBy } from 'lodash';
+import { cloneDeep, orderBy, get } from 'lodash';
 import { ActionButton } from './model/ActionButton';
 import { MyTableActionEnum } from './model/MyTableActionEnum';
 
@@ -33,14 +34,24 @@ export class MyTableComponent implements OnInit, OnChanges {
   dataModify: boolean = false;
   MyTableActionEnum = MyTableActionEnum;
 
-  constructor() {}
+  iterableDiffer: any;
+
+  constructor(private iterableDiffers: IterableDiffers) {
+    this.iterableDiffer = iterableDiffers.find([]).create(undefined);
+  }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.itemPerPage = this.tableConfig.paginationTable.itemPerPage;
+    let change = this.iterableDiffer.diff(this.data);
+    if (change) {
+      console.log(this.data);
+    }
+
     this.setMaxPage();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.itemPerPage = this.tableConfig.paginationTable.itemPerPage;
+  }
 
   isAdd(action: string): boolean {
     if (action == MyTableActionEnum.NEW_ROW) return true;
@@ -91,7 +102,7 @@ export class MyTableComponent implements OnInit, OnChanges {
   }
 
   setMaxPage() {
-    if (this.data.length > this.itemPerPage) {
+    if (cloneDeep(this.data).length > this.itemPerPage) {
       this.maxPage = (this.data.length / this.itemPerPage) | 0;
     } else {
       this.maxPage = 0;
@@ -100,5 +111,9 @@ export class MyTableComponent implements OnInit, OnChanges {
 
   actionButton(item: any, action: string) {
     this.actionChange.emit({ action, item });
+  }
+
+  getValueOfList(object: any, path: string): any {
+    return get(object, path);
   }
 }

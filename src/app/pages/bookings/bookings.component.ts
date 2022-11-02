@@ -1,9 +1,15 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { cloneDeep } from 'lodash';
+import { ActionButton } from 'src/app/component-custom/my-table/model/ActionButton';
 import { MyTableActionEnum } from 'src/app/component-custom/my-table/model/MyTableActionEnum';
 import { MyTableConfig } from 'src/app/component-custom/my-table/model/MyTableConfig';
 import { BookingModel } from 'src/app/models/BookingModel';
 import { BookingTableModel } from 'src/app/models/BookingTableModel';
+import { CarModel } from 'src/app/models/CarModel';
+import { UserModel } from 'src/app/models/UserModel';
 import { BookingService } from 'src/app/service/BookingService/booking.service';
+import { CarService } from 'src/app/service/CarService/car.service';
+import { UserService } from 'src/app/service/UserService/user.service';
 
 @Component({
   selector: 'app-bookings',
@@ -16,23 +22,27 @@ export class BookingsComponent implements OnInit {
       { key: 'id', label: 'ID' },
       { key: 'start_date', label: 'Start Date' },
       { key: 'finish_date', label: 'Finish Date' },
-      { key: 'username', label: 'User Username' },
-      { key: 'license_plate', label: 'Car License PLate' },
+      { key: 'user.username', label: 'User Username' },
+      { key: 'car.license_plate', label: 'Car License PLate' },
       { key: 'approve', label: 'Approve' },
     ],
     order: { orderType: '', defaultColumn: '' },
     paginationTable: { itemPerPage: 3, itemPerPageOption: [5, 10, 15] },
     actions: [
       MyTableActionEnum.NEW_ROW,
-      MyTableActionEnum.EDIT,
+      MyTableActionEnum.APPROVE,
       MyTableActionEnum.DELETE,
     ],
   };
 
   data: BookingModel[] = [];
-  dataTable: BookingTableModel[] = [];
+
+  dataForm?: BookingModel;
+  formVisible: boolean = false;
 
   constructor(private bookingService: BookingService) {}
+
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {
     this.getBookings();
@@ -41,12 +51,43 @@ export class BookingsComponent implements OnInit {
   getBookings() {
     this.bookingService.getBookings().subscribe((bookings) => {
       this.data = bookings;
-      let itemsForTable: BookingTableModel[] = [];
+    });
+  }
 
-      this.data.forEach((booking) =>
-        itemsForTable.push(new BookingTableModel(booking))
+  detectAction(actionTable: ActionButton) {
+    switch (actionTable.action) {
+      case MyTableActionEnum.DELETE: {
+        this.deleteBooking(actionTable.item);
+        break;
+      }
+      case MyTableActionEnum.NEW_ROW: {
+        this.dataForm = actionTable.item;
+        this.formVisible = true;
+        break;
+      }
+    }
+  }
+
+  deleteBooking(booking: BookingModel) {
+    this.bookingService
+      .deleteBooking(booking.id)
+      .subscribe(
+        (bookingDelete) =>
+          (this.data = this.data.filter((item) => item.id != booking.id))
       );
-      this.dataTable = itemsForTable;
+  }
+
+  formData(newBooking: BookingModel) {
+    this.addBooking(newBooking);
+    this.formVisible = false;
+  }
+
+  addBooking(newBooking: BookingModel) {
+    newBooking.id = Math.max(...this.data.map((o) => o.id)) + 1;
+
+    this.bookingService.addBooking(newBooking).subscribe((booking) => {
+      this.data.push(cloneDeep(booking));
+      console.log(this.data);
     });
   }
 }

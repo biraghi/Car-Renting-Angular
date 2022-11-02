@@ -53,7 +53,10 @@ export class CarsComponent implements OnInit {
         this.deleteCar(actionTable.item);
         break;
       }
-      case (MyTableActionEnum.NEW_ROW, MyTableActionEnum.EDIT): {
+      case MyTableActionEnum.NEW_ROW:
+      case MyTableActionEnum.EDIT: {
+        this.dataForm = actionTable.item;
+        this.formVisible = true;
         break;
       }
     }
@@ -66,5 +69,36 @@ export class CarsComponent implements OnInit {
         (carDeleted) =>
           (this.data = this.data.filter((item) => item.id != car.id))
       );
+  }
+
+  formData(newCar: CarModel) {
+    if (newCar.id) {
+      this.updateCar(newCar);
+      this.formVisible = false;
+    } else {
+      this.addCar(newCar);
+      this.formVisible = false;
+    }
+  }
+
+  updateCar(newCar: CarModel) {
+    this.copyData = this.data;
+    this.carService.updateCar(newCar).subscribe((car) => {
+      this.copyData.forEach((item) => {
+        if (item.id == car.id) {
+          item = car;
+        }
+      });
+      this.data = this.copyData;
+    });
+  }
+
+  addCar(newCar: CarModel) {
+    this.copyData = this.data;
+    newCar.id = Math.max(...this.data.map((o) => o.id)) + 1;
+    this.carService.addCar(newCar).subscribe((car) => {
+      this.copyData.push(car);
+      this.data = this.copyData;
+    });
   }
 }

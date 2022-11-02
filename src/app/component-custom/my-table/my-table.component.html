@@ -91,7 +91,7 @@
             "
           >
             <td *ngFor="let header of tableConfig.headers">
-              {{ dataRow[header.key] }}
+              {{ getValueOfList(dataRow, header.key) }}
             </td>
             <td>
               <div class="btn-group">
