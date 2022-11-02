@@ -60,8 +60,10 @@ export class AvailableCarComponent implements OnInit {
   }
 
   search() {
-    this.getCars();
-    this.formVisible = false;
+    if (this.start_date.value && this.finish_date.value) {
+      this.getCars();
+      this.formVisible = false;
+    }
   }
 
   getCars() {

@@ -1,4 +1,5 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { ActionButton } from 'src/app/component-custom/my-table/model/ActionButton';
 import { MyTableActionEnum } from 'src/app/component-custom/my-table/model/MyTableActionEnum';
@@ -40,7 +41,7 @@ export class BookingsComponent implements OnInit {
   dataForm?: BookingModel;
   formVisible: boolean = false;
 
-  constructor(private bookingService: BookingService) {}
+  constructor(private router: Router, private bookingService: BookingService) {}
 
   ngOnChanges(changes: SimpleChanges): void {}
 
@@ -61,8 +62,7 @@ export class BookingsComponent implements OnInit {
         break;
       }
       case MyTableActionEnum.NEW_ROW: {
-        this.dataForm = actionTable.item;
-        this.formVisible = true;
+        this.router.navigate(['car/available']);
         break;
       }
       case MyTableActionEnum.APPROVE: {
