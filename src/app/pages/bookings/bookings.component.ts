@@ -65,6 +65,13 @@ export class BookingsComponent implements OnInit {
         this.formVisible = true;
         break;
       }
+      case MyTableActionEnum.APPROVE: {
+        this.data.forEach((item) => {
+          if (item.id == actionTable.item.id) {
+            item.approve = true;
+          }
+        });
+      }
     }
   }
 
