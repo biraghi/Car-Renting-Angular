@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit {
       { key: 'username', label: 'Username' },
       { key: 'lastname', label: 'Cognome' },
       { key: 'firstname', label: 'Nome' },
-      { key: 'birth_date', label: 'Data di nascita' },
+      { key: 'birthDate', label: 'Data di nascita' },
       { key: 'admin', label: 'Admin' },
     ],
     order: { orderType: '', defaultColumn: '' },

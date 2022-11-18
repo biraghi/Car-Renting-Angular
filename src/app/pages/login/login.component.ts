@@ -22,9 +22,7 @@ export class LoginComponent implements OnInit {
       password: [''],
     });
   }
-  ngOnInit() {
-    this.authService.doLogout();
-  }
+  ngOnInit() {}
   loginUser() {
     this.authService.login(this.loginForm.value);
   }

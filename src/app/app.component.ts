@@ -9,7 +9,7 @@ import { ItemNavbar } from './component-custom/navbar/models/ItemNavbar';
 export class AppComponent {
   title = 'Car-Renting';
   navbar = {
-    brand: new ItemNavbar('carRenting', 'Car Renting', ''),
+    brand: new ItemNavbar('carRenting', 'Car Renting', '/index'),
     data: [
       {
         item: new ItemNavbar('logout', 'Logout', '/logout'),

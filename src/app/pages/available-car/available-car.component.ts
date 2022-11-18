@@ -20,11 +20,11 @@ export class AvailableCarComponent implements OnInit {
   header: MyTableConfig = {
     headers: [
       { key: 'id', label: 'ID' },
-      { key: 'license_plate', label: 'License PLate' },
+      { key: 'licensePlate', label: 'License PLate' },
       { key: 'manufacturer', label: 'Manufacturer' },
       { key: 'model', label: 'Model' },
-      { key: 'type_name', label: 'Type Name' },
-      { key: 'year_registration', label: 'Year Registration' },
+      { key: 'typeName', label: 'Type Name' },
+      { key: 'yearRegistration', label: 'Year Registration' },
     ],
     order: { orderType: '', defaultColumn: '' },
     paginationTable: { itemPerPage: 3, itemPerPageOption: [5, 10, 15] },
@@ -61,13 +61,15 @@ export class AvailableCarComponent implements OnInit {
 
   search() {
     if (this.start_date.value && this.finish_date.value) {
-      this.getCars();
+      this.getCars(this.start_date.value, this.finish_date.value);
       this.formVisible = false;
     }
   }
 
-  getCars() {
-    return this.carService.getCars().subscribe((cars) => (this.data = cars));
+  getCars(start: Date, finish: Date) {
+    return this.carService
+      .getCarsAvailable(start, finish)
+      .subscribe((cars) => (this.data = cars));
   }
 
   addBooking(car: CarModel) {

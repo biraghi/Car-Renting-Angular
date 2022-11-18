@@ -7,21 +7,21 @@ import { BookingModel } from 'src/app/models/BookingModel';
   providedIn: 'root',
 })
 export class BookingService {
-  private bookingsUrl = 'api/bookings';
+  private bookingsUrl = 'http://localhost:8080/booking';
 
   constructor(private http: HttpClient) {}
 
   getBookings(): Observable<BookingModel[]> {
-    return this.http.get<BookingModel[]>(this.bookingsUrl);
+    return this.http.get<BookingModel[]>(this.bookingsUrl + '/all');
   }
 
   deleteBooking(id: number) {
-    return this.http.delete<BookingModel>(this.bookingsUrl + '/' + id);
+    return this.http.delete<BookingModel>(this.bookingsUrl + '/deleteId/' + id);
   }
 
   addBooking(newBooking: BookingModel) {
     return this.http.post<BookingModel>(
-      this.bookingsUrl,
+      this.bookingsUrl + '/add',
       newBooking,
       this.httpOptions
     );

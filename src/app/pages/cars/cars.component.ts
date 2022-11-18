@@ -15,11 +15,11 @@ export class CarsComponent implements OnInit {
   header: MyTableConfig = {
     headers: [
       { key: 'id', label: 'ID' },
-      { key: 'license_plate', label: 'License PLate' },
+      { key: 'licensePlate', label: 'License PLate' },
       { key: 'manufacturer', label: 'Manufacturer' },
       { key: 'model', label: 'Model' },
-      { key: 'type_name', label: 'Type Name' },
-      { key: 'year_registration', label: 'Year Registration' },
+      { key: 'typeName', label: 'Type Name' },
+      { key: 'yearRegistration', label: 'Year Registration' },
     ],
     order: { orderType: '', defaultColumn: '' },
     paginationTable: { itemPerPage: 3, itemPerPageOption: [5, 10, 15] },

@@ -21,10 +21,10 @@ export class BookingsComponent implements OnInit {
   header: MyTableConfig = {
     headers: [
       { key: 'id', label: 'ID' },
-      { key: 'start_date', label: 'Start Date' },
-      { key: 'finish_date', label: 'Finish Date' },
+      { key: 'startDate', label: 'Start Date' },
+      { key: 'finishDate', label: 'Finish Date' },
       { key: 'user.username', label: 'User Username' },
-      { key: 'car.license_plate', label: 'Car License PLate' },
+      { key: 'car.licensePlate', label: 'Car License PLate' },
       { key: 'approve', label: 'Approve' },
     ],
     order: { orderType: '', defaultColumn: '' },
