@@ -7,28 +7,36 @@ import { UserModel } from 'src/app/models/UserModel';
   providedIn: 'root',
 })
 export class UserService {
-  private usersUrl = 'api/users';
+  private usersUrl = 'http://localhost:8080/user';
 
   constructor(private http: HttpClient) {}
 
   getUsers(): Observable<UserModel[]> {
-    return this.http.get<UserModel[]>(this.usersUrl);
+    return this.http.get<UserModel[]>(this.usersUrl + '/all');
   }
 
   getUserByUsername(username: string): Observable<UserModel> {
-    return this.http.get<UserModel>(this.usersUrl + '/?username=' + username);
+    return this.http.get<UserModel>(this.usersUrl + '/getUsername/' + username);
   }
 
   deleteUser(id: number) {
-    return this.http.delete<UserModel>(this.usersUrl + '/' + id);
+    return this.http.delete<UserModel>(this.usersUrl + '/deleteId/' + id);
   }
 
   addUser(newUser: UserModel) {
-    return this.http.post<UserModel>(this.usersUrl, newUser, this.httpOptions);
+    return this.http.post<UserModel>(
+      this.usersUrl + '/add',
+      newUser,
+      this.httpOptions
+    );
   }
 
   updateUser(newUser: UserModel) {
-    return this.http.put<UserModel>(this.usersUrl, newUser, this.httpOptions);
+    return this.http.put<UserModel>(
+      this.usersUrl + '/update',
+      newUser,
+      this.httpOptions
+    );
   }
 
   httpOptions = {

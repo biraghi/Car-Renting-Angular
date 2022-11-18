@@ -5,10 +5,14 @@ import { BookingsComponent } from './pages/bookings/bookings.component';
 import { CarsComponent } from './pages/cars/cars.component';
 import { DataComponent } from './pages/data/data.component';
 import { IndexComponent } from './pages/index/index.component';
+import { LoginComponent } from './pages/login/login.component';
 import { UsersComponent } from './pages/users/users.component';
 
 const routes: Routes = [
-  { path: '', component: IndexComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LoginComponent },
+  { path: 'index', component: IndexComponent },
   { path: 'data/users', component: UsersComponent },
   { path: 'data/cars', component: CarsComponent },
   { path: 'data/bookings', component: BookingsComponent },

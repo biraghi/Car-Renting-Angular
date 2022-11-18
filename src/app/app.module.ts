@@ -18,11 +18,12 @@ import { CarsComponent } from './pages/cars/cars.component';
 import { BookingsComponent } from './pages/bookings/bookings.component';
 import { DataComponent } from './pages/data/data.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { HttpClientModule } from '@angular/common/http';
-import { InMemoryDataService } from './service/InMemoryDataService/in-memory-data.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SetDateFormatPipe } from './component-custom/my-table/pipe/set-date-format.pipe';
 import { MyFormComponent } from './component-custom/my-form/my-form.component';
 import { AvailableCarComponent } from './pages/available-car/available-car.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AuthconfigInterceptor } from './service/Auth/authconfig.interceptor';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { AvailableCarComponent } from './pages/available-car/available-car.compo
     SetDateFormatPipe,
     MyFormComponent,
     AvailableCarComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,11 +51,14 @@ import { AvailableCarComponent } from './pages/available-car/available-car.compo
     NgbModule,
     FontAwesomeModule,
     HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
-      dataEncapsulation: false,
-    }),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthconfigInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
