@@ -16,7 +16,7 @@ import { UserModel } from 'src/app/models/UserModel';
   providedIn: 'root',
 })
 export class AuthJwtService {
-  endpoint: string = 'http://localhost:8080/';
+  endpoint: string = 'http://server:8080/';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   currentUser = {};
 

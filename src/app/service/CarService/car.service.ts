@@ -8,7 +8,7 @@ import { CarModel } from 'src/app/models/CarModel';
   providedIn: 'root',
 })
 export class CarService {
-  private carsUrl = 'http://localhost:8080/car';
+  private carsUrl = 'http://server:8080/car';
 
   constructor(private http: HttpClient) {}
 
